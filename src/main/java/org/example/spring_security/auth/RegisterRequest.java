@@ -1,5 +1,7 @@
 package org.example.spring_security.auth;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.example.spring_security.user.Role;
 
 public record RegisterRequest(
