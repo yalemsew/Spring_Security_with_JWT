@@ -8,6 +8,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 public enum Role {
     ADMIN(
@@ -22,7 +24,7 @@ public enum Role {
 
     public Collection<? extends GrantedAuthority> getAuthorities(){
         List<SimpleGrantedAuthority> authorityList =
-                getPermissions().stream().map(permission -> new SimpleGrantedAuthority(permission.getPermission())).toList();
+                getPermissions().stream().map(permission -> new SimpleGrantedAuthority(permission.getPermission())).collect(Collectors.toList());
         authorityList.add(new SimpleGrantedAuthority("ROLE_"+this.name()));
         return authorityList;
     }
