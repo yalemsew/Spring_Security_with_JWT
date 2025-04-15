@@ -1,6 +1,7 @@
 package org.example.spring_security.config;
 
 import lombok.RequiredArgsConstructor;
+import org.example.spring_security.user.Role;
 import org.example.spring_security.user.User;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +30,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorizeRequest -> authorizeRequest
                         .requestMatchers("/api/v1/auth/*").permitAll()
 //                        .requestMatchers("api/v1/auth/authenticate").permitAll()
+                                .requestMatchers("/api/v1/management/**").hasAnyRole(Role.ADMIN.name(), Role.MEMBER.name())
+                                .requestMatchers("/api/v1/admin/**").hasRole(Role.ADMIN.name())
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwrFilter, UsernamePasswordAuthenticationFilter.class)
